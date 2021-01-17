@@ -29,7 +29,9 @@ cron "30 * * * *" script-path=https://raw.githubusercontent.com/shylocks/Loon/ma
  */
 const $ = new Env('工业品爱消除');
 const notify = $.isNode() ? require('./sendNotify') : '';
+//Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+
 let inviteCodes = [
   '840266@2583822@2585219@2586018@1556311@2583822@2585256@2586023@2728968',
   '840266@2583822@2585219@2586018@1556311@2583822@2585256@2586023@2728968',

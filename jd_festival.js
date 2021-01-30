@@ -1,24 +1,24 @@
 /*
 京东手机年终奖
 活动时间：2021年1月26日～2021年2月8日
-更新地址：https://raw.githubusercontent.com/shylocks/Loon/main/jd_festival.js
+更新地址：https://gitee.com/lxk0301/jd_scripts/raw/master/jd_festival.js
 活动入口：https://shopping-festival.m.jd.com
 已支持IOS双京东账号, Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, 小火箭，JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #京东手机年终奖
-30 9 * * * https://raw.githubusercontent.com/shylocks/Loon/main/jd_festival.js, tag=京东手机年终奖, img-url=https://raw.githubusercontent.com/yogayyy/Scripts/master/Icon/shylocks/jd_festival2.jpg, enabled=true
+15 0 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_festival.js, tag=京东手机年终奖, img-url=https://raw.githubusercontent.com/yogayyy/Scripts/master/Icon/shylocks/jd_festival2.jpg, enabled=true
 
 ================Loon==============
 [Script]
-cron "30 9 * * *" script-path=https://raw.githubusercontent.com/shylocks/Loon/main/jd_festival.js, tag=京东手机年终奖
+cron "15 0 * * *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_festival.js, tag=京东手机年终奖
 
 ===============Surge=================
-京东手机年终奖 = type=cron,cronexp="30 9 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/shylocks/Loon/main/jd_festival.js
+京东手机年终奖 = type=cron,cronexp="15 0 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_festival.js
 
 ============小火箭=========
-京东手机年终奖 = type=cron,script-path=https://raw.githubusercontent.com/shylocks/Loon/main/jd_festival.js, cronexpr="30 9 * * *", timeout=3600, enable=true
+京东手机年终奖 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_festival.js, cronexpr="15 0 * * *", timeout=3600, enable=true
  */
 const $ = new Env('京东手机年终奖');
 
@@ -30,8 +30,8 @@ let cookiesArr = [], cookie = '', message;
 const randomCount = $.isNode() ? 20 : 5;
 
 const inviteCodes = [
-  `6764b858-1650-46f9-9f9f-7ee69e231bfb@3b97a1bd-dab9-4857-a04f-e1fd64227ad7@445409a1-b50c-4632-8da8-727a1ebff4c7@6a78dbba-3a58-44b1-bb6c-8473739a03a1@f69eda0e-1fac-4334-894b-6881ef3fda67@a7284a27-9404-4cbc-a643-c261a037c374`,
-  `6764b858-1650-46f9-9f9f-7ee69e231bfb@3b97a1bd-dab9-4857-a04f-e1fd64227ad7@445409a1-b50c-4632-8da8-727a1ebff4c7@6a78dbba-3a58-44b1-bb6c-8473739a03a1@f69eda0e-1fac-4334-894b-6881ef3fda67@a7284a27-9404-4cbc-a643-c261a037c374`
+  `9b98eb88-80ed-40ac-920c-a63fc769e72b@94c2a4d4-b53b-454b-82a0-0b80828bfd37@e274c80b-82dd-470c-878c-0790f5bf6a5d@aae299fc-6854-4fa7-b3ef-a6dedc3771b7@91ae877b-c98b-484a-9143-22d3a70b4088`,
+  `9b98eb88-80ed-40ac-920c-a63fc769e72b@94c2a4d4-b53b-454b-82a0-0b80828bfd37@e274c80b-82dd-470c-878c-0790f5bf6a5d@aae299fc-6854-4fa7-b3ef-a6dedc3771b7@91ae877b-c98b-484a-9143-22d3a70b4088`
 ];
 
 if ($.isNode()) {
@@ -40,7 +40,7 @@ if ($.isNode()) {
   })
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {
   };
-  //if (JSON.stringify(process.env).indexOf('GITHUB') > -1) process.exit(0)
+  if (JSON.stringify(process.env).indexOf('GITHUB') > -1) process.exit(0)
 } else {
   let cookiesData = $.getdata('CookiesJD') || "[]";
   cookiesData = jsonParse(cookiesData);
@@ -487,7 +487,6 @@ function getTs() {
 function taskPostUrl(function_id, body = {}) {
   const t = getTs()
   let n = {
-    t: t,
     ...body
   }
   let str = ''

@@ -86,39 +86,14 @@ async function jdImmortalAnswer() {
         $.earn = 0
         await getHomeData()
         if ($.risk) return
-        await getQuestions()
-        await $.wait(2 * 1000)
-        await getQuestions()
-        await $.wait(2 * 1000)
-        await getQuestions()
-        await $.wait(2 * 1000)
-        await getQuestions()
-        await $.wait(2 * 1000)
-        await getQuestions()
-        await $.wait(2 * 1000)
-        await getQuestions()
-        await $.wait(2 * 1000)
-        await getQuestions()
-        await $.wait(2 * 1000)
-        await getQuestions()
-        await $.wait(2 * 1000)
-        await getQuestions()
-        await $.wait(2 * 1000)
-        await getQuestions()
-        await $.wait(2 * 1000)
-        await getQuestions()
-        await $.wait(2 * 1000)
-        await getQuestions()
-        await $.wait(2 * 1000)
-        await getQuestions()
-        await $.wait(2 * 1000)
-        await getQuestions()
-        await $.wait(2 * 1000)
-        await getQuestions()
-        await $.wait(2 * 1000)
+        for (let i = 0; i < 15; i++) {
+            if ($.coin > 100) {
+                await getQuestions()
+                await $.wait(2 * 1000)
+            }
+        }
+        await exchange();
         await showMsg()
-        await $.wait(2 * 1000)
-        await exchange()
     } catch (e) {
         $.logErr(e)
     }
@@ -138,6 +113,7 @@ function getHomeData(info = false) {
                         if (info) {
                             $.earn = userCoinNum - $.coin
                         } else {
+
                             console.log(`当前用户金币${userCoinNum}`)
                         }
                         $.coin = userCoinNum
@@ -158,12 +134,12 @@ function getHomeData(info = false) {
 
 function exchange() {
     return new Promise(resolve => {
-        $.get(taskUrl('mcxhd_brandcity_exchange'),(err,resp,data) =>{
-            try{
+        $.get(taskUrl('mcxhd_brandcity_exchange'), (err, resp, data) => {
+            try {
                 if (err) {
                     console.log(`${JSON.stringify(err)}`)
                     console.log(`${$.name} API请求失败，请检查网路重试`)
-                } else{
+                } else {
                     data = JSON.parse(data);
                     if (data.retCode === '200') {
                         console.log(`本次活动共获取积分 ${data.result.consumedUserScore}\n兑换倍数为 ${data.result.userGrade.exchageRate}\n最终获得京豆 ${data.result.receivedJbeanNum}个`)
@@ -201,37 +177,44 @@ function getQuestions() {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
-                    if (data && data['retCode'] === "200") {
-                        console.log(`答题开启成功`)
-                        let i = 0, questionList = []
-
-                        for (let vo of data.result.questionList) {
-                            $.question = vo
-                            let option = null, hasFound = false
-
-                            console.log(`去查询第${++i}题：【${vo.questionStem}】`)
-                            $.zhe_optionId = null;
-                            await getAnswer(vo.questionId);
-
-                            if ($.zhe_optionId === null) {
-                                $.zhe_optionId = vo.options[1].optionId;
-                            }
-                                  await $.wait(2 * 1000)
-
-                            let b = {
-                                "questionToken": vo.questionToken,
-                                "optionId": $.zhe_optionId,
-                                "optionDesc": vo.options[1].optionDesc,
-                                "questionId": vo.questionId,
-                                "questionStem": vo.questionStem,
-                            }
-
-                            await answer(b)
-
+                    if (data) {
+                        switch (data['retCode']) {
+                            case "200":
+                                console.log(`答题开启成功`)
+                                $.coin = $.coin - 100;
+                                let i = 0, questionList = []
+                                for (let vo of data.result.questionList) {
+                                    $.question = vo
+                                    console.log(`去查询第${++i}题：【${vo.questionStem}】`)
+                                    $.zhe_optionId = null;
+                                    await getAnswer(vo.questionId);
+                                    if ($.zhe_optionId === null) {
+                                        $.zhe_optionId = vo.options[1].optionId;
+                                        $.zhe_optionDesc = vo.options[1].optionDesc;
+                                    }
+                                    await $.wait(2 * 1000)
+                                    let b = {
+                                        "questionToken": vo.questionToken,
+                                        "optionId": $.zhe_optionId,
+                                        "optionDesc": $.zhe_optionDesc,
+                                        "questionId": vo.questionId,
+                                        "questionStem": vo.questionStem,
+                                    }
+                                    await answer(b)
+                                }
+                                break;
+                            case "325":
+                                console.log(data['retMessage']);
+                                $.coin = 0;
+                                break;
+                            case "326":
+                                console.log(data['retMessage']);
+                                $.coin = 0;
+                                break;
+                            default:
+                                console.log(data);
+                                break;
                         }
-                    } else {
-                        console.log(`答题开启失败`)
-                        return
                     }
                 }
             } catch (e) {
@@ -257,7 +240,6 @@ function answer(body = {}) {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
-                    // console.log(data)
                     if (data && data['retCode'] === "200") {
                         if (data.result.isCorrect) {
                             console.log(`您选对啦！获得积分${data.result.score}，本次答题共计获得${data.result.totalScore}分`)
@@ -308,16 +290,17 @@ function answer(body = {}) {
 function getAnswer(params) {
     return new Promise(resolve => {
         $.get({
-            url: `https://api.2610086.com/jd.question?questionId=${params}`
+            url: `https://api.r2ray.com/jd.question/index?questionId=${params}`
         }, (err, resp, data) => {
             try {
                 if (err) {
-                    console.log(err)
+                    console.log(`${JSON.stringify(err)}`)
                 } else {
                     data = JSON.parse(data);
-                    if (data.code === 200) {
+                    if (data.resCode === 200) {
                         console.log(`Nice!在题库中找到了正确的答案：${data.data.optionDesc}\n`)
                         $.zhe_optionId = data.data.optionId;
+                        $.zhe_optionDesc = data.data.optionDesc;
                     } else {
                         console.log('题库中没有找到对应的答案。');
                     }
@@ -332,18 +315,21 @@ function getAnswer(params) {
 }
 
 function newQuestion(params) {
+    let opt = {
+        'url': 'https://api.r2ray.com/jd.question/addorupdate',
+        'headers': {
+            'Content-Type': 'application/json',
+        },
+        'body': JSON.stringify(params),
+    }
     return new Promise(resolve => {
-        $.get({
-        url: `https://api.2610086.com/jd.question/newQuestion?questionId=${params.questionId}&questionStem=${params.questionStem}&optionId=${params.optionId}&optionDesc=${params.optionDesc}`
-        }, (err, resp, data) => {
+        $.post(opt, (err, resp, data) => {
             try {
                 if (err) {
-                    console.log(err)
+                    console.log(`${JSON.stringify(err)}`)
                 } else {
-
-                    if (data.code === 200) {
-                        console.log('题库+1')
-                    } 
+                    data = JSON.parse(data)
+                    console.log(data.msg)
                 }
             } catch (e) {
                 console.log(e);

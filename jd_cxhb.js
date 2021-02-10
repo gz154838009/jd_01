@@ -1,11 +1,11 @@
 /*
-* 年货节除夕红包
-0 0,20-23 10-12 2 *
+* 年货节除夕红包  0 0,20-23 10-12 2 *
 */
 
 const $ = new Env('年货节除夕红包');
 
-const geo={"lng":"113.715803","lat":"31.315719"}
+//最好修改成自己的经纬度
+const geo={"lng":"116.397128","lat":"39.916527"}
 
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -13,7 +13,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 const randomCount = $.isNode() ? 20 : 5;
 //IOS等用户直接用NobyDa的jd cookie
-let cookiesArr = [], cookie = '', message, superAssist = [];
+let cookiesArr = [], cookie = '', message, superAssist = [],notice='';
 var acId=''
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -60,6 +60,7 @@ const openUrl = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%
       await jdXNNQ()
     }
   }
+  await notify.sendNotify(`除夕红包`, notice);
 })()
   .catch((e) => {
     $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -70,6 +71,7 @@ const openUrl = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%
 
 async function jdXNNQ() {
   try {
+    notice += $.nickName+`：`
     await Lottery(acId)
   } catch (e) {
     $.logErr(e)
@@ -110,8 +112,10 @@ function Lottery(actId) {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data.msg=='success') {
+              notice +=`获得 `+data.lotteryResult.hongBaoList[0].hongbaoSendInfo.disCount+`\n`
               console.log(`获得 `+data.lotteryResult.hongBaoList[0].hongbaoSendInfo.disCount)
             } else {
+              notice += data.msg+`\n`
               console.log(data.msg)
             }
           }

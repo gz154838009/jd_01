@@ -5,7 +5,7 @@
 const $ = new Env('年货节除夕红包');
 
 //最好修改成自己的经纬度
-const geo={"lng":"116.397128","lat":"39.916527"}
+const geo={"lng":"113.3894945975","lat":"23.168033254065"}
 
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

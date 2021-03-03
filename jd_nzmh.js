@@ -2,23 +2,24 @@
 女装盲盒
 活动时间：2021-2-26至2021-3-8
 活动地址：https://anmp.jd.com/babelDiy/Zeus/3DSHPs2xC66RgcCEB8YVLsudqfh5/index.html
+活动地址：https://anmp.jd.com/babelDiy/Zeus/gY7ymUmC8ZM74Zw3woiDDQU1naT/index.html
 活动入口：京东app-女装馆-赢京豆
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ============Quantumultx===============
 [task_local]
 #女装盲盒
-0 8 1-8/1,27,28 2,3 * https://jdsharedresourcescdn.azureedge.net/jdresource/jd_nzmh.js, tag=女装盲盒, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+0 8 1-8/1,27,28 2,3 * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nzmh.js, tag=女装盲盒, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "0 8 1-8/1,27,28 2,3 *" script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_nzmh.js,tag=女装盲盒
+cron "0 8 1-8/1,27,28 2,3 *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nzmh.js,tag=女装盲盒
 
 ===============Surge=================
-女装盲盒 = type=cron,cronexp="0 8 1-8/1,27,28 2,3 *",wake-system=1,timeout=3600,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_nzmh.js
+女装盲盒 = type=cron,cronexp="0 8 1-8/1,27,28 2,3 *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nzmh.js
 
 ============小火箭=========
-女装盲盒 = type=cron,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_nzmh.js, cronexpr="0 8 1-8/1,27,28 2,3 *", timeout=3600, enable=true
+女装盲盒 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nzmh.js, cronexpr="0 8 1-8/1,27,28 2,3 *", timeout=3600, enable=true
  */
 
 const $ = new Env('女装盲盒抽京豆');
@@ -64,6 +65,7 @@ if ($.isNode()) {
         continue
       }
       await jdMh()
+      await jdMh('https://anmp.jd.com/babelDiy/Zeus/gY7ymUmC8ZM74Zw3woiDDQU1naT/index.html?wxAppName=jd')
     }
   }
 })()
@@ -74,8 +76,8 @@ if ($.isNode()) {
     $.done();
   })
 
-async function jdMh() {
-  await getInfo()
+async function jdMh(url) {
+  await getInfo(url)
   await getUserInfo()
   await draw()
   while ($.userInfo.bless >= $.userInfo.cost_bless_one_time) {
@@ -94,10 +96,10 @@ function showMsg() {
   })
 }
 
-function getInfo() {
+function getInfo(url = 'https://anmp.jd.com/babelDiy/Zeus/3DSHPs2xC66RgcCEB8YVLsudqfh5/index.html?wxAppName=jd') {
   return new Promise(resolve => {
     $.get({
-      url: 'https://anmp.jd.com/babelDiy/Zeus/3DSHPs2xC66RgcCEB8YVLsudqfh5/index.html?wxAppName=jd',
+      url,
       headers: {
         Cookie: cookie
       }

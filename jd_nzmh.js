@@ -9,17 +9,17 @@
 ============Quantumultx===============
 [task_local]
 #女装盲盒
-0 8 1-8/1,27,28 2,3 * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nzmh.js, tag=女装盲盒, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+0 8 1-8/1,27,28 2,3 * https://jdsharedresourcescdn.azureedge.net/jdresource/jd_nzmh.js, tag=女装盲盒, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "0 8 1-8/1,27,28 2,3 *" script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nzmh.js,tag=女装盲盒
+cron "0 8 1-8/1,27,28 2,3 *" script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_nzmh.js,tag=女装盲盒
 
 ===============Surge=================
-女装盲盒 = type=cron,cronexp="0 8 1-8/1,27,28 2,3 *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nzmh.js
+女装盲盒 = type=cron,cronexp="0 8 1-8/1,27,28 2,3 *",wake-system=1,timeout=3600,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_nzmh.js
 
 ============小火箭=========
-女装盲盒 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_nzmh.js, cronexpr="0 8 1-8/1,27,28 2,3 *", timeout=3600, enable=true
+女装盲盒 = type=cron,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_nzmh.js, cronexpr="0 8 1-8/1,27,28 2,3 *", timeout=3600, enable=true
  */
 
 const $ = new Env('女装盲盒抽京豆');
@@ -64,8 +64,14 @@ if ($.isNode()) {
         }
         continue
       }
-      await jdMh()
-      await jdMh('https://anmp.jd.com/babelDiy/Zeus/gY7ymUmC8ZM74Zw3woiDDQU1naT/index.html?wxAppName=jd')
+      try {
+        await jdMh()
+        await jdMh('https://anmp.jd.com/babelDiy/Zeus/gY7ymUmC8ZM74Zw3woiDDQU1naT/index.html?wxAppName=jd')
+        // await jdMh('https://anmp.jd.com/babelDiy/Zeus/3UGPT8RMBu4kL2YAYN98MgkcDhRq/index.html?wxAppName=jd')
+        await jdMh('https://anmp.jd.com/babelDiy/Zeus/yiNQjMxQvs3R3SdS4nwa2MFk1FE/index.html?wxAppName=jd')
+      } catch (e) {
+        $.logErr(e)
+      }
     }
   }
 })()
@@ -77,15 +83,19 @@ if ($.isNode()) {
   })
 
 async function jdMh(url) {
-  await getInfo(url)
-  await getUserInfo()
-  await draw()
-  while ($.userInfo.bless >= $.userInfo.cost_bless_one_time) {
-    await draw()
+  try {
+    await getInfo(url)
     await getUserInfo()
-    await $.wait(500)
+    await draw()
+    while ($.userInfo.bless >= $.userInfo.cost_bless_one_time) {
+      await draw()
+      await getUserInfo()
+      await $.wait(500)
+    }
+    await showMsg();
+  } catch (e) {
+    $.logErr(e)
   }
-  await showMsg();
 }
 
 function showMsg() {
@@ -97,6 +107,7 @@ function showMsg() {
 }
 
 function getInfo(url = 'https://anmp.jd.com/babelDiy/Zeus/3DSHPs2xC66RgcCEB8YVLsudqfh5/index.html?wxAppName=jd') {
+  console.log(`url:${url}`)
   return new Promise(resolve => {
     $.get({
       url,
@@ -237,7 +248,7 @@ function TotalBean() {
               return
             }
             if (data['retcode'] === 0) {
-              $.nickName = data['base'].nickname;
+              $.nickName = (data['base'] && data['base'].nickname) || $.UserName;
             } else {
               $.nickName = $.UserName
             }

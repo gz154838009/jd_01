@@ -21,7 +21,7 @@ cron "5 8,14,20 17-25 3 *" script-path=https://raw.githubusercontent.com/i-chenz
 const $ = new Env('母婴跳一跳');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
-const path = $.isNode() ? require('path') : '';
+//const path = $.isNode() ? require('path') : '';
 let cookiesArr = [], cookie = '', message = '';
 let helpAuthor = true;//为作者助力的开关
 const ACT_API = 'https://sendbeans.jd.com/jump/';

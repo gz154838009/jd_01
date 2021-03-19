@@ -182,7 +182,8 @@ async function getTask() {
               let task = [...timeLimitTask, ...commonTask]
               for (let vo of task) {
                 if (vo['taskName'] === '每日邀请好友') {
-                  console.log(`您的好友助力码为 ${vo['jingCommand']['keyOpenapp'].match(/masterPin":"(.*)","/)[1]}`)
+                  // console.log(`您的好友助力码为 ${vo['jingCommand']['keyOpenapp'].match(/masterPin":"(.*)","/)[1]}`)
+                  console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${vo['jingCommand']['keyOpenapp'].match(/masterPin":"(.*)","/)[1]}\n`);
                   $.invites.push(vo['jingCommand']['keyOpenapp'].match(/masterPin":"(.*)","/)[1]);
                 }
                 if (['70', '50', '30', '40'].includes(vo['taskType'])) {
@@ -380,7 +381,7 @@ function taskUrl(function_id, body = {}) {
   function getSign(data) {
     let t = +new Date()
 
-    return {sealsTs: t, seals: $.md5(`${data.taskId}${data.inviterPin?data.inviterPin:''}${t}hbpt2020`)}
+    return {sealsTs: t, seals: $.md5(`${data.taskId}${data.inviterPin?data.inviterPin:''}${t}Ea6YXT`)}
   }
   if(body['taskId']) {
     body = {...body, ...getSign(body)}

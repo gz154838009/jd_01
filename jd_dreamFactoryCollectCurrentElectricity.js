@@ -2,7 +2,7 @@ const $ = new Env('单独收集电力');
 //此处填写cookie，一个账号
 let currentCookie = "";
 //此处url添加抓包的url， 找关键字 CollectCurrentElectricity，下面默认的不通用，需自己单独账号抓包
-let url = `https://wq.jd.com/dreamfactory/generator/CollectCurrentElectricity?zone=dream_factory&apptoken=&pgtimestamp=&phoneID=&factoryid=9228870&doubleflag=0&timeStamp=undefined&_time=1616137631104&_stk=_time%2Capptoken%2Cdoubleflag%2Cfactoryid%2Cpgtimestamp%2CphoneID%2Czone&_ste=1&h5st=20210319150711105%3B6914400155451161%3B10001%3Btk01w90051b38a8nQ0I3dHpTcVRTbhoG%2F9Bp1iky2KnZatiZ8Ads8107Nr%2FNQdaOV7xbCNRmGDIk7gMPo1Ic4%2BszEc2S%3B0d19c9493f9f0893031e02535ec15ecfb601383516edd4ce28a116f91b160792&_=1616137631109&sceneval=2&g_login_type=1`
+let url = `https://wq.jd.com/dreamfactory/generator/CollectCurrentElectricity?zone=dream_factory&apptoken=bc6d9556f1a075fefd33753bfee70a05&pgtimestamp=1616323855064&phoneID=9b9c8a10d78f91cb534bb4e56a9118e6cf2c2d57&factoryid=1099533164689&doubleflag=0&timeStamp=undefined&_time=1616323855076&_stk=_time%2Capptoken%2Cdoubleflag%2Cfactoryid%2Cpgtimestamp%2CphoneID%2Czone&_ste=1&h5st=20210321185055077%3B8118865645636161%3B10001%3Btk01w88591af0a8nR1FNbzIrWk1X9WpZJkPPOz8FmWfY13225h3VYy%2FqpGxvA12V2VCZLEwSEmN%2FOZh9b2M25jZ4Hdwd%3Ba642cfbc26c752fc0375f097d049e543de3d28a8adca965b987fb421cb49a06b&_=1616323855079&sceneval=2&g_login_type=1`
 !(async () => {
   await CollectCurrentElectricity();
 })()

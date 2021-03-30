@@ -14,6 +14,7 @@
 脚本仅支持Node环境，手机上的均不支持。
 0 0,9,13,20 * * *
 */
+process.env.JD_USER_AGENT="jdapp;iPhone;9.3.0;14.4;2b2cc82d3f3799de0ef82986db394bded9e1e04d;network/wifi;ADID/DD9433AE-6BA2-4585-8F28-185BCB0E4E98;supportApplePay/0;hasUPPay/0;hasOCPay/0;model/iPhone9,1;addressid/137688148;supportBestPay/0;appBuild/167454;pushNoticeIsOpen/0;jdSupportDarkMode/0;pv/177.6;apprpd/Home_Main;ref/https%3A%2F%2Fwbbny.m.jd.com%2FbabelDiy%2FZeus%2F2cKMj86srRdhgWcKonfExzK4ZMBy%2Findex.html%3FbabelChannel%3Dfc%26lng%3D113.383095%26lat%3D23.161783%26sid%3Df64baf9eb6e9bcc6cf8ab35ee2b18cdw%26un_area%3D19_1601_3633_63254;psq/4;ads/;psn/2b2cc82d3f3799de0ef82986db394bded9e1e04d|339;jdv/0|kong|t_1001226363_|jingfen|5c18598e22774744ba111b2097af9998|1611922269858|1611922279;adk/;app_device/IOS;pap/JA2015_311210|9.3.0|IOS 14.4;Mozilla/5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"
 const $ = new Env('美丽颜究院');
 const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require("constants");
 const WebSocket = require("ws");

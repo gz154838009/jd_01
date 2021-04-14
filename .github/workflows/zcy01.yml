@@ -3,7 +3,7 @@
 
 
 
-name: dust_sync
+name: zyc01_sync
 on:
  # schedule:
   #  - cron: '1 */3 * * *'

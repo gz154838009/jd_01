@@ -28,6 +28,6 @@ jobs:
         if: env.PAT
         with:
           source_repo: "https://github.com/monk-coder/dust.git"
-          source_branch: "master"
+          source_branch: "dust"
           destination_branch: "dust"
           github_token: ${{ secrets.PAT }} 

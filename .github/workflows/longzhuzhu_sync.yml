@@ -28,6 +28,6 @@ jobs:
         if: env.PAT
         with:
           source_repo: "https://github.com/nianyuguai/longzhuzhu.git"
-          source_branch: "mian"
+          source_branch: "main"
           destination_branch: "longzhuzhu"
           github_token: ${{ secrets.PAT }} 

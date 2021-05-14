@@ -6,7 +6,7 @@
 name: zyc01_sync
 on:
   schedule:
-    - cron: '1 */3 * * *'
+    - cron: '1 */13 * * *'
   workflow_dispatch:
   watch:
     types: started

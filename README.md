@@ -31,3 +31,4 @@
 |        `JD_TRY_GOOD_FILTERS`        |      X东试用             | 非必须 | 过滤试用商品关键字，以 `@` 隔开 |
 |        `JD_TRY_MIN_PRICE`        |      X东试用             | 非必须 | 试用商品最低价格 |
 |        `JD_TRY_MAX_SUPPLY_COUNT`        |      X东试用             | 非必须 | 试用商品最多提供数量（过滤垃圾商品） |
+|        `JD_TRY_APPLY_INTERVAL`        |      X东试用             | 非必须 | 试用商品间隔，单位：毫秒 |

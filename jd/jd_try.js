@@ -23,10 +23,10 @@ let allGoodList = []
 
 // default params
 $.pageSize = 12
-let cidsList =["家用电器", "手机数码", "电脑办公","美妆护肤", "生鲜美食","家居家装","食品饮料","服饰鞋包","更多惊喜", "母婴玩具"]
+let cidsList =["家用电器", "手机数码", "电脑办公","美妆护肤", "生鲜美食","家居家装","食品饮料","服饰鞋包","母婴玩具"]
 let typeList = ["普通试用", "闪电试用"]
-let goodFilters = "飞机杯".split('@')
-let minPrice = 20
+let goodFilters = "教程@软件@英语@大理@丽江@辅导@联通卡@培训@靓美@益生菌@备孕@哺乳@脚气@震动@阳具@云南旅游@旅游@飞机杯@卷尺@看房@鞋带@丰胸@课程培训@体验班@精品课@红参@益生元@御夫王@苗霸@北海游@购房@键盘膜@情趣内衣@种子@三元催化@男用喷剂@玉石@万向轮@档案袋@癣@中年@玉坠@老太太@妇女@私处@孕妇@卫生条@课@培训@阴道@生殖器@肛门@狐臭@洋娃娃@鱼饵@钓鱼@吊带@黑丝@婴儿@幼儿@娃娃@网课@网校@手机壳@钢化膜@车载充电器@网络课程@疣@避孕套@女纯棉@按键贴@背膜@后膜@背贴@贝尔思力@卡薇尔@三角裤@痔疮@神皂@美少女@纸尿裤@英语@俄语@四级@六级@四六级@在线网络@在线@阴道炎@宫颈@螺丝@延时@糜烂@和田玉@白玉@打底裤@手机膜@早早孕@增时@狗".split('@')
+let minPrice = 50
 
 const cidsMap = {
 	"全部商品": "0",
@@ -48,7 +48,7 @@ const cidsMap = {
 const typeMap = {
 	"全部试用": "0",
 	"普通试用": "1",
-	"闪电试用": "3",
+	"闪电试用": "2",
 	"30天试用": "5",
 }
 
@@ -215,7 +215,7 @@ async function getGoodList() {
 async function filterGoodList() {
 	console.log(`⏰ 过滤商品列表，当前共有${allGoodList.length}个商品`)
 	const now = Date.now()
-	const oneMoreDay = now +  24 * 60 * 60 * 1000
+	const oneMoreDay = now + 24 * 60 * 60 * 033300
 	$.goodList = allGoodList.filter(good => {
 		// 1. good 有问题
 		// 2. good 距离结束不到10min
@@ -225,7 +225,7 @@ async function filterGoodList() {
 			return false
 		}
 		for (let item of goodFilters) {
-			if (good.trialName.indexOf(item) == -1) return false
+			if (good.trialName.indexOf(item) != -1) return false
 		}
 		return true
 
